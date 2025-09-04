@@ -415,22 +415,14 @@ This project is licensed under an **Academic Use License** - see the LICENSE fil
 
 **Important**: This software is intended for academic and research purposes only. Commercial use is strictly prohibited. For commercial licensing inquiries, please contact SPHERE AX.
 
-## 📞 Support
-
-For questions, issues, or feature requests:
-
-1. **Check the documentation** in the `docs/` directory
-2. **Search existing issues** on GitHub
-3. **Create a new issue** with detailed information
-4. **Contact the maintainers** for urgent matters
-
 ## 🙏 Acknowledgments
 
-- SPHERE AX AILab for the original GACL methodology
+- SPHERE AX AILab for the original GACL methodology(https://www.sphereax.com/)
 - Open-source communities for PyTorch, transformers, and related libraries
-- Wildlife conservation organizations for dataset guidance
+- Wildlife conservation organizations for dataset guidance(https://www.nie.re.kr/)
 - Camera trap researchers for domain expertise
 
 ---
 
 **Note**: This implementation is for research and educational purposes. Please ensure compliance with local wildlife protection laws and ethical guidelines when working with wildlife imagery.
+
