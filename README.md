@@ -16,7 +16,7 @@ This implementation is based on the GACL (Graph Attention Contrastive Learning) 
 - ✅ **Multi-modal Learning**: Combines visual and textual representations
 - ✅ **Graph-based Architecture**: Leverages spatial relationships in images
 - ✅ **Contrastive Learning**: Four-way contrastive loss for robust learning
-- ✅ **Korean Wildlife Focus**: Specialized for Korean species (Wildboar, Goral, Deers, Other)
+- ✅ **Korean Wildlife Focus**: Specialized for Korean species (Wildboar, Goral, Deer, Other)
 - ✅ **Production Ready**: Complete training and inference pipelines
 - ✅ **Comprehensive Evaluation**: Detailed metrics and visualization tools
 
