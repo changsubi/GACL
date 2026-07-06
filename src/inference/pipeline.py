@@ -364,7 +364,7 @@ class WildlifePipeline:
                 colors = {
                     'Wildboar': (255, 0, 0),    # Red
                     'Goral': (0, 255, 0),       # Green  
-                    'Deers': (0, 0, 255),       # Blue
+                    'Deer': (0, 0, 255),       # Blue
                     'Other': (255, 255, 0),     # Yellow
                     'Unidentified': (128, 128, 128)  # Gray
                 }
