@@ -64,7 +64,7 @@ def create_dummy_dataset(
                     # Add gray patterns  
                     dummy_image = cv2.cvtColor(dummy_image, cv2.COLOR_RGB2GRAY)
                     dummy_image = cv2.cvtColor(dummy_image, cv2.COLOR_GRAY2RGB)
-                elif class_name == 'Deers':
+                elif class_name == 'Deer':
                     # Add lighter brown patterns
                     dummy_image[:, :, 1] = np.clip(dummy_image[:, :, 1] * 1.2, 0, 255)
                 
