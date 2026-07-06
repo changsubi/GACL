@@ -40,6 +40,7 @@ gacl_wildlife_classification/
 │   ├── training/                # Training utilities
 │   │   ├── trainer.py           # Main training loop
 │   │   ├── metrics.py           # Evaluation metrics
+│   │   ├── calibration.py       # Calibration & threshold analysis (SI S2)
 │   │   └── utils.py             # Training utilities
 │   ├── inference/               # Inference pipelines
 │   │   ├── pipeline.py          # Complete processing pipeline
@@ -48,7 +49,8 @@ gacl_wildlife_classification/
 │       └── dataset_utils.py     # Dataset creation and analysis
 ├── scripts/                     # Entry point scripts
 │   ├── train.py                 # Training script
-│   └── inference.py             # Inference script
+│   ├── inference.py             # Inference script
+│   └── calibration_analysis.py  # Calibration & threshold analysis (SI S2)
 ├── configs/                     # Configuration files
 ├── docs/                        # Documentation
 ├── tests/                       # Unit tests
@@ -253,6 +255,8 @@ The training process provides comprehensive monitoring:
 - **Precision/Recall/F1**: Per-class and macro-averaged metrics
 - **Confusion Matrix**: Detailed classification analysis
 - **Species Distribution**: Analysis of detection patterns
+- **Calibration**: ECE, MCE, Brier score, reliability diagram, and
+  confidence-threshold trade-off (see *Calibration and Threshold Analysis*)
 
 ### Output Files
 
@@ -269,6 +273,82 @@ results/
 ├── training_curves.png         # Loss and accuracy curves
 ├── evaluation_results.json     # Detailed evaluation metrics
 └── training_history.json       # Complete training history
+```
+
+## 📐 Calibration and Threshold Analysis
+
+The calibration analysis described in **Supporting Information S2** of the paper
+is implemented in [`src/training/calibration.py`](src/training/calibration.py)
+and exposed through [`scripts/calibration_analysis.py`](scripts/calibration_analysis.py).
+It examines the relationship between predicted confidence and empirical accuracy
+and supports practical operating-threshold selection for deployment.
+
+It computes:
+
+- **Reliability diagram** (accuracy vs. confidence, with a confidence histogram)
+- **Expected Calibration Error (ECE)** and **Maximum Calibration Error (MCE)**
+- **Brier score** (multi-class) and **negative log-likelihood**
+- **Confidence-threshold trade-off**: coverage (throughput) vs. accuracy of
+  auto-accepted predictions, with the default `0.8` operating point highlighted.
+  Predictions below the threshold are *flagged for manual review* rather than
+  discarded, reflecting the asymmetric costs of errors in wildlife monitoring.
+- Optional **temperature scaling** for post-hoc recalibration.
+
+### Running the analysis
+
+**From saved evaluation results** (recommended — no GPU/model required; uses the
+`probabilities` and `labels` written to `results/evaluation_results.json` during
+training):
+
+```bash
+python scripts/calibration_analysis.py \
+    --results_json ./results/evaluation_results.json \
+    --output_dir ./calibration_results
+```
+
+**On your own labelled deployment data** (runs the trained classifier; the
+directory must contain one sub-folder per class, e.g. `Wildboar/`, `Goral/`,
+`Deers/`, `Other/`):
+
+```bash
+python scripts/calibration_analysis.py \
+    --data_dir ./my_camera_trap_data/test \
+    --model_path ./models/best_model.pth \
+    --output_dir ./calibration_results
+```
+
+**On synthetic demonstration data** (verifies the tooling end-to-end without any
+real data):
+
+```bash
+python scripts/calibration_analysis.py --synthetic --output_dir ./calibration_results
+```
+
+Useful options: `--n_bins` (reliability bins, default 15),
+`--default_threshold` (highlighted operating point, default
+`config.classification_confidence_threshold` = 0.8), and `--thresholds` (explicit
+threshold list for the trade-off table).
+
+### Outputs
+
+```
+calibration_results/
+├── reliability_diagram.png     # Accuracy-vs-confidence with ECE/MCE/Brier
+├── threshold_analysis.png      # Coverage vs. accepted-accuracy trade-off
+├── calibration_metrics.json    # Scalar metrics + full threshold table
+└── threshold_analysis.csv      # Threshold table (spreadsheet-friendly)
+```
+
+### Programmatic use
+
+```python
+from training.calibration import CalibrationAnalyzer
+
+analyzer = CalibrationAnalyzer.from_evaluation_results('results/evaluation_results.json')
+print(analyzer.summary())
+print(analyzer.compute_metrics())              # ECE, MCE, Brier, NLL, ...
+analyzer.plot_reliability_diagram('reliability_diagram.png')
+analyzer.plot_threshold_analysis('threshold_analysis.png')
 ```
 
 ## 🔧 Advanced Usage
