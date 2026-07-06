@@ -21,7 +21,7 @@ class Config:
     def __init__(self):
         # Dataset Configuration
         self.num_classes: int = 4
-        self.class_names: List[str] = ['Wildboar', 'Goral', 'Deers', 'Other']
+        self.class_names: List[str] = ['Wildboar', 'Goral', 'Deer', 'Other']
         self.image_size: int = 224
         self.batch_size: int = 16
         
@@ -83,14 +83,14 @@ class Config:
         self.frame_prompts: Dict[str, str] = {
             'Wildboar': "A large brown wild boar with coarse fur, stocky body, and prominent snout standing in forest habitat",
             'Goral': "A small gray-brown goral with short curved horns, compact body, and agile stance on rocky terrain",
-            'Deers': "A graceful deer with slender legs, alert posture, and distinctive antlers or ears in woodland setting",
+            'Deer': "A graceful deer with slender legs, alert posture, and distinctive antlers or ears in woodland setting",
             'Other': "Various small to medium mammals including raccoon dogs, badgers, and birds in natural habitat"
         }
         
         self.object_prompts: Dict[str, str] = {
             'Wildboar': "stocky body, coarse fur, prominent snout",
             'Goral': "curved horns, compact build, gray fur",
-            'Deers': "slender legs, antlers, alert ears",
+            'Deer': "slender legs, antlers, alert ears",
             'Other': "diverse mammals, varied features"
         }
         
