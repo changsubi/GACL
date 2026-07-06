@@ -91,7 +91,7 @@ korean_wildlife_dataset/
 │   │   ├── image_001.jpg
 │   │   └── ...
 │   ├── Goral/
-│   ├── Deers/
+│   ├── Deer/
 │   └── Other/
 ├── val/
 │   └── [same structure as train]
@@ -205,7 +205,7 @@ The model uses carefully crafted text prompts for each species:
 
 - **Wildboar**: "A large brown wild boar with coarse fur, stocky body, and prominent snout standing in forest habitat"
 - **Goral**: "A small gray-brown goral with short curved horns, compact body, and agile stance on rocky terrain"
-- **Deers**: "A graceful deer with slender legs, alert posture, and distinctive antlers or ears in woodland setting"
+- **Deer**: "A graceful deer with slender legs, alert posture, and distinctive antlers or ears in woodland setting"
 - **Other**: "Various small to medium mammals including raccoon dogs, badgers, and birds in natural habitat"
 
 ## 📊 Training Configuration
@@ -308,7 +308,7 @@ python scripts/calibration_analysis.py \
 
 **On your own labelled deployment data** (runs the trained classifier; the
 directory must contain one sub-folder per class, e.g. `Wildboar/`, `Goral/`,
-`Deers/`, `Other/`):
+`Deer/`, `Other/`):
 
 ```bash
 python scripts/calibration_analysis.py \
