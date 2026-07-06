@@ -12,15 +12,18 @@ import logging
 import torch
 from torch.utils.data import DataLoader
 
-# Add src to path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
+# Add project root to path so `src` is importable as a package.
+# (src modules use relative imports like `from ..configs.config`, which
+#  require `src` to be the top-level package — same approach as
+#  scripts/train_blocked_eval.py.)
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from configs.config import config
-from data.dataset import create_datasets
-from data.augmentation import DataAugmentation
-from models.gacl_model import GACLModel
-from training.trainer import WildlifeTrainer
-from utils.dataset_utils import create_dummy_dataset, analyze_dataset_structure
+from src.configs.config import config
+from src.data.dataset import create_datasets
+from src.data.augmentation import DataAugmentation
+from src.models.gacl_model import GACLModel
+from src.training.trainer import WildlifeTrainer
+from src.utils.dataset_utils import create_dummy_dataset, analyze_dataset_structure
 
 
 def setup_logging(log_level: str = 'INFO'):
