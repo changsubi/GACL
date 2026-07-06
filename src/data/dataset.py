@@ -31,7 +31,7 @@ class KoreanWildlifeDataset(Dataset):
     │   │   ├── image_001.jpg
     │   │   └── ...
     │   ├── Goral/
-    │   ├── Deers/
+    │   ├── Deer/
     │   └── Other/
     ├── val/
     │   └── [same structure as train]
