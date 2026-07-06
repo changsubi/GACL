@@ -512,6 +512,40 @@ class WildlifeTrainer:
         
         # Save detailed results
         self._save_evaluation_results(all_predictions, all_labels, all_probabilities)
+
+        # Calibration and threshold analysis (Supporting Information S2).
+        self._save_calibration_analysis(all_labels, all_probabilities)
+
+    def _save_calibration_analysis(self, labels: List[int], probabilities: List):
+        """Compute and save calibration metrics and figures (SI S2).
+
+        Guarded so that a plotting/analysis failure never interrupts training.
+        """
+        try:
+            import numpy as np
+            from .calibration import CalibrationAnalyzer
+
+            analyzer = CalibrationAnalyzer(
+                probabilities=np.asarray(probabilities, dtype=np.float64),
+                labels=np.asarray(labels, dtype=np.int64),
+                class_names=self.config.class_names,
+                default_threshold=self.config.classification_confidence_threshold,
+            )
+            self.logger.info("\n" + analyzer.summary())
+            analyzer.save_metrics(
+                os.path.join(self.config.results_path, 'calibration_metrics.json')
+            )
+            analyzer.save_threshold_csv(
+                os.path.join(self.config.results_path, 'threshold_analysis.csv')
+            )
+            analyzer.plot_reliability_diagram(
+                os.path.join(self.config.results_path, 'reliability_diagram.png')
+            )
+            analyzer.plot_threshold_analysis(
+                os.path.join(self.config.results_path, 'threshold_analysis.png')
+            )
+        except Exception as e:  # pragma: no cover - defensive
+            self.logger.warning(f"Calibration analysis skipped: {e}")
     
     def _save_confusion_matrix(self, labels: List[int], predictions: List[int]):
         """Save confusion matrix visualization."""
