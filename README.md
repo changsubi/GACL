@@ -1,6 +1,6 @@
 # GACL - Graph Attention Contrastive Learning Approach for Region-Specific Mammal Classification
 
-A comprehensive implementation of **Graph Attention Contrastive Learning (GACL)** for Korean wildlife species classification using multi-modal learning. This project implements a two-stage detection and classification pipeline for camera trap image analysis. https://www.biorxiv.org/content/10.1101/2025.09.17.676694v1
+A comprehensive implementation of **Graph Attention Contrastive Learning (GACL)** for Korean wildlife species classification using multi-modal learning. This project implements a two-stage detection and classification pipeline for camera trap image analysis. http://dx.doi.org/10.1002/2688-8319.70322
 
 ## 🔬 Research Overview
 
